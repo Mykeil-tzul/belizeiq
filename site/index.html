@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BelizeIQ · Explore Belize</title><meta name="description" content="Explore Belize through its reef, Maya sites, food, and tourism data."><link rel="stylesheet" href="style.css"><script defer src="explore.js"></script></head>
+<body>
+<header><a class="brand" href="#">Belize<span>IQ</span></a><nav><a href="#places">Places</a><a href="#food">Food</a><a href="#data">Data</a></nav></header>
+<main>
+<section class="hero"><div><p class="eyebrow">Reef • Rainforest • Culture</p><h1>Explore Belize</h1><p>From the Great Blue Hole to a plate of fry jacks, get to know the places, flavors, and numbers behind Belize.</p><a class="button" href="#places">Explore places</a> <a class="button secondary" href="#data">See the data</a></div></section>
+<section id="places" class="wrap"><p class="eyebrow">Places to explore</p><h2>From reef to rainforest</h2><div class="grid" id="place-grid"></div></section>
+<section id="food" class="wrap"><p class="eyebrow">Belizean cuisine</p><h2>At the Belizean table</h2><p>Breakfast favorites, Garifuna cooking, and street food. Images are illustrative.</p><div class="grid" id="food-grid"></div><a href="https://www.travelbelize.org/cuisine/">Explore Belizean cuisine at Travel Belize ↗</a></section>
+<section id="data" class="wrap"><p class="eyebrow">Tourism and population</p><h2>Belize by the numbers</h2><div class="data-grid">
+<article class="panel"><h3>Tourist arrivals</h3><p>Belize nationally · Full calendar years 2019–2024</p><label for="series">Arrival series</label> <select id="series"><option value="overnight">Overnight arrivals</option><option value="cruise">Cruise arrivals</option></select><div id="bars"></div><p id="tourism-detail" aria-live="polite"></p><a href="https://belize.un.org/sites/default/files/2025-11/Belize%202025%20Country%20Analysis%20DIGITAL%20-%20NOV5%202025.pdf">UN Belize Country Analysis, Figure 1 ↗</a> · <a href="tourism.csv" download>CSV</a></article>
+<article class="panel"><h3>Explore the six districts</h3><p>2022 Census · Resident population</p><div class="map-row"><svg id="map" viewBox="0 0 240 300" aria-label="Interactive map of Belize’s districts"></svg><div><label for="district">District</label><select id="district"></select><p id="district-detail" aria-live="polite"></p></div></div><a href="https://sib.org.bz/wp-content/uploads/CensusKeyFindingsReport_2022.pdf">Statistical Institute of Belize ↗</a> · <a href="districts.csv" download>CSV</a></article>
+</div>
+<article class="panel research"><h3>Research questions</h3><label for="question">Choose a question</label> <select id="question"><option value="recovery">How did overnight tourism recover after 2020?</option><option value="districts">Which district had the most residents in 2022?</option><option value="local">How many tourists visited each district?</option></select><p id="answer" aria-live="polite"></p><a id="answer-source" href="#data">Read the source ↗</a></article>
+</section></main>
+<footer class="wrap">BelizeIQ · <a href="https://www.naturalearthdata.com/about/terms-of-use/">District boundaries: Natural Earth</a> · Travel and food imagery is AI-generated illustration.</footer>
+</body></html>
