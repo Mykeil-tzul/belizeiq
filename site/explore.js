@@ -1,4 +1,4 @@
-"use strict";
+import {answerQuestion, faq} from "./research.mjs";
 const byId = id => document.getElementById(id);
 const fmt = value => new Intl.NumberFormat("en-BZ").format(value);
 const places = [
@@ -111,19 +111,47 @@ async function districts() {
   byId("district").onchange = event => select(event.target.value);
   select("Belize");
 }
-const tourismSource = document.querySelector('a[href*="belize.un.org"]').href;
-const censusSource = document.querySelector('a[href*="CensusKeyFindings"]').href;
-const answers = {
-  recovery: ["Overnight arrivals rose from 144,124 in 2020 to 541,364 in 2024, about 3.8 times the 2020 count and 7.6% above 2019. Overnight figures sum airport and land/sea arrivals in Figure 1.",tourismSource],
-  districts: ["Belize District had 113,630 residents in the 2022 census, the most of the six districts. Cayo was second at 99,105.",censusSource],
-  local: ["The tourism series covers national arrivals. This dashboard has district population counts; district visitor totals would need a district-level tourism source.",tourismSource]
-};
-function answer() {
-  const [text,source] = answers[byId("question").value];
-  byId("answer").textContent = text;
-  byId("answer-source").href = source;
+const researchData = Promise.all([rows("tourism.csv"), rows("districts.csv")])
+  .then(([tourism, districts]) => ({tourism, districts, places, foods}))
+  .catch(() => null);
+function message(label, content, source) {
+  const item = document.createElement("article");
+  item.className = label === "You" ? "chat-question" : "chat-answer";
+  const title = document.createElement("strong");
+  title.textContent = label;
+  const body = document.createElement("p");
+  body.textContent = content;
+  item.append(title, body);
+  if (source) {
+    const link = document.createElement("a");
+    [link.textContent, link.href] = source;
+    item.append(link);
+  }
+  return item;
 }
-byId("question").onchange = answer;
-answer();
+async function ask(question) {
+  const log = byId("research-log");
+  const placeholder = message("BelizeIQ", "Looking at the sources…");
+  log.append(message("You", question), placeholder);
+  log.scrollTop = log.scrollHeight;
+  const data = await researchData;
+  const result = data ? answerQuestion(question, data) : {text:"The source files could not load. Try refreshing the page."};
+  placeholder.replaceWith(message("BelizeIQ", result.text, result.source));
+  log.scrollTop = log.scrollHeight;
+}
+for (const question of faq) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = question;
+  button.onclick = () => ask(question);
+  byId("research-faq").append(button);
+}
+byId("research-form").onsubmit = event => {
+  event.preventDefault();
+  const input = byId("research-input"), question = input.value.trim();
+  if (!question) return;
+  input.value = "";
+  ask(question);
+};
 tourism().catch(() => {byId("tourism-detail").textContent = "Tourism data could not load.";});
 districts().catch(() => {byId("district-detail").textContent = "District data could not load.";});

@@ -30,3 +30,9 @@ python3 -m http.server 8000 --directory site
 ```
 
 Open `http://localhost:8000`. BelizeIQ uses static HTML, CSS and JavaScript. GitHub Actions publishes the `site/` directory to GitHub Pages. Earlier churn-dashboard work remains in the repository history.
+
+## Ask BelizeIQ
+
+Type a question or choose a common one. The research chat can look up arrival figures by year, compare or rank districts using the 2022 Census, and explain dishes and destinations featured in the site. It computes answers from the bundled tables and links the source. Questions about current tourism totals, district visitor numbers or unrelated subjects receive a coverage explanation. The chat runs in the browser without an LLM, and it does not send or save your questions.
+
+Run `node --test tests/*.test.mjs` to check year comparisons, district rankings and unsupported questions.
